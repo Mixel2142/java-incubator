@@ -56,6 +56,6 @@
         <module>register-service</module>
         <module>auth-service</module>
         <module>example-service</module>
-        <module>account-service</module>
+        <module>accountEntity-service</module>
     </modules>
 </project>
