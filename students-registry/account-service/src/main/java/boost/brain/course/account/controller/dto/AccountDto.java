@@ -8,4 +8,13 @@ public class AccountDto {
     private String email;
     private String password;
 
+    public AccountDto(String email, String password) {
+       // this.accountId = accountId;
+        this.email = email;
+        this.password = password;
+    }
+
+    public AccountDto() {
+
+    }
 }
