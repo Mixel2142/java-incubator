@@ -11,12 +11,13 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class AccountEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long accountId;
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+//    private long accountId;
 //    @ManyToMany
 //    @JoinTable(name = "users", joinColumns = @JoinColumn(name = "email"),
 //            inverseJoinColumns = @JoinColumn(name = "user_email"))
+    @Id
     @Column(name = "ACCOUNT_EMAIL")
     private String email;
     @Column(name = "ACCOUNT_PASSWORD")

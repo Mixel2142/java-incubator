@@ -28,7 +28,7 @@ public class AccountRepository {
         }
 
         AccountEntity accountEntity = new AccountEntity();
-        BeanUtils.copyProperties(accountDto, accountEntity, "accountId");
+        BeanUtils.copyProperties(accountDto, accountEntity);
         entityManager.persist(accountEntity);
 
         AccountDto result = new AccountDto();
@@ -37,8 +37,8 @@ public class AccountRepository {
         return result;
     }
 
-    public AccountDto read(long accountId) {
-        AccountEntity accountEntity = entityManager.find(AccountEntity.class, accountId);
+    public AccountDto read(String email) {
+        AccountEntity accountEntity = entityManager.find(AccountEntity.class, email);
         if (accountEntity == null) {
             return null;
         }
@@ -54,7 +54,7 @@ public class AccountRepository {
             return false;
         }
 
-        AccountEntity accountEntity = entityManager.find(AccountEntity.class, accountDto.getAccountId());
+        AccountEntity accountEntity = entityManager.find(AccountEntity.class, accountDto.getEmail());
         if (accountEntity == null) {
             return false;
         }
@@ -65,8 +65,8 @@ public class AccountRepository {
         return true;
     }
 
-    public boolean delete(long accountId) {
-        AccountEntity accountEntity = entityManager.find(AccountEntity.class, accountId);
+    public boolean delete(String email) {
+        AccountEntity accountEntity = entityManager.find(AccountEntity.class, email);
         if (accountEntity == null) {
             return false;
         }
@@ -74,5 +74,7 @@ public class AccountRepository {
         entityManager.remove(accountEntity);
         return true;
     }
+
+
 
 }

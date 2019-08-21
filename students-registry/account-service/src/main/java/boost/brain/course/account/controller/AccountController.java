@@ -45,7 +45,7 @@ public class AccountController {
 
     /**
      * Метод считывает данные аккаунта AccountDto
-     * @param accountDto
+     * @param email
      * @return accountDto
      * @throws
      */
@@ -55,11 +55,11 @@ public class AccountController {
      * curl -v http://localhost:8080/api/account/read/accountId
      */
 
-    @GetMapping(path = Constants.READ_PREFIX + "/{accountId}",
+    @GetMapping(path = Constants.READ_PREFIX + "/{email}",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public @ResponseBody
-    AccountDto read(@PathVariable long accountId) {
-        AccountDto result = repository.read(accountId);
+    AccountDto read(@PathVariable String email) {
+        AccountDto result = repository.read(email);
         if (result == null) {
             throw new NotFoundException();
         }
@@ -94,20 +94,20 @@ public class AccountController {
 
     /**
      * Метод удаляет данные аккаунта AccountDto
-     * @param accountId
+     * @param email
      * @return String
      * @throws
      */
 
     /**
      * проверка метода
-     * curl -X DELETE http://localhost:8080/api/account/dete/accountId
+     * curl -X DELETE http://localhost:8080/api/account/delete/email
      */
 
-    @DeleteMapping(path = Constants.DELETE_PREFIX + "/{accountId}")
+    @DeleteMapping(path = Constants.DELETE_PREFIX + "/{email}")
     @ResponseStatus(HttpStatus.OK)
-    public @ResponseBody String delete(@PathVariable long accountId) {
-        if (repository.delete(accountId)) {
+    public @ResponseBody String delete(@PathVariable String email) {
+        if (repository.delete(email)) {
             return HttpStatus.OK.getReasonPhrase();
         } else {
             throw new NotFoundException();

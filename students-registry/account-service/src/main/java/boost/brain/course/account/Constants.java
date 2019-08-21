@@ -8,4 +8,6 @@ public interface Constants {
     String READ_PREFIX = "/read";
     String UPDATE_PREFIX = "/update";
     String DELETE_PREFIX = "/delete";
+    String LOGIN_PREFIX = "/login";
+    String REGISTRATION_PREFIX = "/registration";
 }
