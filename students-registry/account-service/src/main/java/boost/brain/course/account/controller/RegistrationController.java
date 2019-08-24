@@ -8,13 +8,16 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
 import java.util.Map;
 
 @Controller
+@RequestMapping(Constants.REGISTRATION_CONTROLLER_PREFIX)
 public class RegistrationController {
+
     @Autowired
     private AccountRepository accountRepository;
 
