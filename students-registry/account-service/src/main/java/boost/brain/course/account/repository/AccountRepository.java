@@ -76,15 +76,15 @@ public class AccountRepository {
     }
 
 
-    public AccountDto findByEmail(String email) {
-        AccountEntity accountEntity = entityManager.find(AccountEntity.class, email);
-        if (accountEntity == null) {
-            return null;
-        }
-        AccountDto result = new AccountDto();
-        BeanUtils.copyProperties(accountEntity, result);
-        return result;
-    }
+//    public AccountDto findByEmail(String email) {
+//        AccountEntity accountEntity = entityManager.find(AccountEntity.class, email);
+//        if (accountEntity == null) {
+//            return null;
+//        }
+//        AccountDto result = new AccountDto();
+//        BeanUtils.copyProperties(accountEntity, result);
+//        return result;
+//    }
 
 
 

@@ -4,8 +4,7 @@ public interface Constants {
     String API_PREFIX = "/api";
 
     String ACCOUNT_CONTROLLER_PREFIX = API_PREFIX + "/account";
-    String LOGIN_CONTROLLER_PREFIX = API_PREFIX + "/login";
-    String REGISTRATION_CONTROLLER_PREFIX = API_PREFIX + "/registration";
+  ///  String LOGIN_CONTROLLER_PREFIX = API_PREFIX + "/login";
     String CREATE_PREFIX = "/create";
     String READ_PREFIX = "/read";
     String UPDATE_PREFIX = "/update";

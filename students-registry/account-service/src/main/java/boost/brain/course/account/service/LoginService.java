@@ -1,11 +1,6 @@
 package boost.brain.course.account.service;
 
-import org.springframework.stereotype.Service;
+public interface LoginService {
 
-@Service
-public class LoginService{
-
-    public boolean validateEmail(String email, String password) {
-        return (email.equals("email") && password.equals("password")) ? true : false;
-    }
+    boolean validateEmail(String email, String password);
 }

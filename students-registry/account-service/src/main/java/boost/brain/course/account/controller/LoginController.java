@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller
-@RequestMapping(Constants.LOGIN_CONTROLLER_PREFIX)
+import java.util.Map;
+
+@RestController
+@RequestMapping(Constants.ACCOUNT_CONTROLLER_PREFIX)
 public class LoginController {
 
-    @Autowired
-    private AccountsService accountsService;
+//    @Autowired
+//    private AccountsService accountsService;
 
 
     @GetMapping(path = Constants.LOGIN_PREFIX,
@@ -29,60 +31,50 @@ public class LoginController {
         return modelAndView;
     }
 
-
-//    @GetMapping(path = Constants.LOGIN_PREFIX,
+//    @GetMapping(path = Constants.REGISTRATION_PREFIX,
 //            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 //    public @ResponseBody
-//    ModelAndView login(){
+//    ModelAndView registration(){
 //        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("login");
+//        AccountDto account = new AccountDto();
+//        modelAndView.addObject("account", account);
+//        modelAndView.setViewName("registration");
+//        return modelAndView;
+//    }
+//
+//
+//    @PostMapping(path = Constants.REGISTRATION_PREFIX,
+//            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//    public @ResponseBody
+//    ModelAndView createNewAccount(AccountDto account, BindingResult bindingResult) {
+//        ModelAndView modelAndView = new ModelAndView();
+//        AccountDto userExists = accountsService.findAccountByEmail(account.getEmail());
+//        if (userExists != null) {
+//            bindingResult
+//                    .rejectValue("email", "error.account",
+//                            "There is already an account registered with the email provided");
+//        }
+//        if (bindingResult.hasErrors()) {
+//            modelAndView.setViewName("registration");
+//        } else {
+//            accountsService.saveAccount(account);
+//            modelAndView.addObject("successMessage", "Account has been registered successfully");
+//            modelAndView.addObject("account", new AccountDto());
+//            modelAndView.setViewName("registration");
+//
+//        }
 //        return modelAndView;
 //    }
 
-    @GetMapping(path = Constants.REGISTRATION_PREFIX,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public @ResponseBody
-    ModelAndView registration(){
-        ModelAndView modelAndView = new ModelAndView();
-        AccountDto account = new AccountDto();
-        modelAndView.addObject("account", account);
-        modelAndView.setViewName("registration");
-        return modelAndView;
-    }
 
 
-    @PostMapping(path = Constants.REGISTRATION_PREFIX,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public @ResponseBody
-    ModelAndView createNewAccount(AccountDto account, BindingResult bindingResult) {
-        ModelAndView modelAndView = new ModelAndView();
-        AccountDto userExists = accountsService.findAccountByEmail(account.getEmail());
-        if (userExists != null) {
-            bindingResult
-                    .rejectValue("email", "error.account",
-                            "There is already an account registered with the email provided");
-        }
-        if (bindingResult.hasErrors()) {
-            modelAndView.setViewName("registration");
-        } else {
-            accountsService.saveAccount(account);
-            modelAndView.addObject("successMessage", "Account has been registered successfully");
-            modelAndView.addObject("account", new AccountDto());
-            modelAndView.setViewName("registration");
-
-        }
-        return modelAndView;
-    }
-
-
-
-    @GetMapping(path = Constants.LOGOUT_PREFIX,
-            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public @ResponseBody
-    String logout(SessionStatus session) {
-        SecurityContextHolder.getContext().setAuthentication(null);
-        session.setComplete();
-        return "redirect:/welcome";
-    }
+//    @GetMapping(path = Constants.LOGOUT_PREFIX,
+//            produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//    public @ResponseBody
+//    String logout(SessionStatus session) {
+//        SecurityContextHolder.getContext().setAuthentication(null);
+//        session.setComplete();
+//        return "redirect:/welcome";
+//    }
 
 }
