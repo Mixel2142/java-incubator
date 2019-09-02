@@ -29,7 +29,7 @@ public class AccountController {
 
     /**
      * проверка метода
-     * curl -d '{"accountId":11, "email":"newEmail", "password":"newPassword"}'
+     * curl -d '{""email":"newEmail", "password":"newPassword"}'
      * -H 'Content-Type: application/json'
      * http://localhost:8080/api/account/create
      */
@@ -76,7 +76,7 @@ public class AccountController {
 
     /**
      * проверка метода
-     * curl -d '{"accountId": accountId, "email":"newEmail", "password":"newPassword"}'
+     * curl -d '{"email":"email", "password":"newPassword"}'
      * -H 'Content-Type: application/json'
      * -X PATCH http://localhost:8080/api/account/update
      */

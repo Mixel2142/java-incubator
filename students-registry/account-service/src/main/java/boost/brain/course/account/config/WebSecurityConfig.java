@@ -7,19 +7,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.authentication.www.DigestAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.DigestAuthenticationFilter;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
@@ -32,6 +26,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 //    @Autowired
 //    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+//    @Bean
+//    public PasswordEncoder passwordEncoder(){
+//        PasswordEncoder encoder = new BCryptPasswordEncoder();
+//        return encoder;
+//    }
 //
 //    @Override
 //    public void configure(WebSecurity web) throws Exception {
@@ -82,7 +82,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
                 .dataSource(dataSource)
-               .passwordEncoder(NoOpPasswordEncoder.getInstance())
+                .passwordEncoder(NoOpPasswordEncoder.getInstance())
                 .usersByUsernameQuery("select account_email, account_password from accounts where account_email=?")
                 .authoritiesByUsernameQuery("select acc.account_email, ar.account_role from accounts acc inner join account_role ar on acc.account_email = ar.role_email where acc.account_email=?");
             }
@@ -91,15 +91,28 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.addFilter(digestAuthenticationFilter())              // register digest entry point
+        http.cors().and().csrf().disable()
+                .addFilter(digestAuthenticationFilter())              // register digest entry point
                 .exceptionHandling().authenticationEntryPoint(digestEntryPoint())       // on exception ask for digest authentication
                 .and()
                 .httpBasic()                      // it indicate basic authentication is requires
                 .and()
                 .authorizeRequests()
-                .antMatchers(  "/**").permitAll() // no need of any authentication
-                .anyRequest().authenticated();
+                .antMatchers(  "/home", "/api/**").permitAll() // no need of any authentication
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/secure")
+                .permitAll()
+                .and()
+                .rememberMe()
+                .and()
+                .logout()
+                .permitAll();
+
     }
+
+
     DigestAuthenticationFilter digestAuthenticationFilter() throws Exception {
         DigestAuthenticationFilter digestAuthenticationFilter = new DigestAuthenticationFilter();
         digestAuthenticationFilter.setUserDetailsService(userDetailsServiceBean());
@@ -110,7 +123,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     DigestAuthenticationEntryPoint digestEntryPoint() {
         DigestAuthenticationEntryPoint bauth = new DigestAuthenticationEntryPoint();
-        bauth.setRealmName("Digest WF Realm");
+        bauth.setRealmName("Alex");
         bauth.setKey("MySecureKey");
         return bauth;
     }
